@@ -11,14 +11,18 @@
     //  содание шаблонов
 
     var pinsMap = document.querySelector('.map__pins');
-    var parentFragment = document.createDocumentFragment();
+    var parentPinFragment = document.createDocumentFragment();
+    var parentCardFragment = document.createDocumentFragment();
     var similarAdTemplate = document.querySelector('#temp')
         .content.querySelector('.map__card');
-
+    var similarAdPin = document.querySelector('#temp')
+    .content.querySelector('.map__pin');
+ 
     for (var i = 0; i < document.mockAds.length; i++) {
-        var similarAd = similarAdTemplate.cloneNode(true);
-    
-    // функция отрнисовки features
+        var similarPin = similarAdPin.cloneNode(true);
+        var similarAd = similarAdTemplate.cloneNode(true);        
+
+        // функция отрнисовки features
         var createFeatures = function () {
             var featuresArr = document.mockAds[i].offer.features;
             for (var k = 0; k < featuresArr.length; k++) {
@@ -27,10 +31,10 @@
                 similarAd.querySelector('.popup__features').append(el);
             }
         };
-    // функция отрисовки photos
+        // функция отрисовки photos
         var createPhotos = function () {
             var photosArr = document.mockAds[i].offer.photos;
-            
+
             for (var j = 0; j < photosArr.length; j++) {
                 var elem = similarAd.querySelector('.popup__photo');
                 var photo = elem.cloneNode(true);
@@ -40,9 +44,18 @@
 
         };
 
-    // заполнение шаблонов
+        // заполнение шаблонов
 
-        similarAd.style = `left: ${document.mockAds[i].location.x}px; top: ${document.mockAds[i].location.y}px`
+        // метки 
+
+        similarPin.style = `left: ${document.mockAds[i].location.x}px; top: ${document.mockAds[i].location.y}px`;
+        similarPin.querySelector('.map__pin img').src = document.mockAds[i].author.avatar;
+
+        parentPinFragment.appendChild(similarPin);
+
+        
+        // объявления
+
         similarAd.querySelector('.popup__avatar').src = document.mockAds[i].author.avatar;
         similarAd.querySelector('.popup__title').textContent = document.mockAds[i].offer.title;
         similarAd.querySelector('.popup__text--address').textContent = document.mockAds[i].offer.address;
@@ -55,23 +68,22 @@
         similarAd.querySelector('.popup__description').textContent = document.mockAds[i].offer.description;
         createPhotos();
 
-        parentFragment.appendChild(similarAd);
+        parentCardFragment.appendChild(similarAd);
     }
 
-    pinsMap.appendChild(parentFragment);
+    pinsMap.appendChild(parentPinFragment);
+    map.appendChild(parentCardFragment);
 
     // удаление пустого img
     document.addEventListener("DOMContentLoaded", () => {
         var list = document.querySelectorAll('.popup__photos');
-        console.log(list)
         list.forEach((listEl, idx) => {
-            console.log(listEl.childNodes[1])
             listEl.removeChild(listEl.childNodes[1])
         })
     });
-        
-    
-    
-        
+
+
+
+
 
 })();
