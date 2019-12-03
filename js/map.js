@@ -4,8 +4,10 @@
 
     // удаление класса
 
-    var map = document.querySelector('.map');
-    map.classList.remove('map--faded');
+    var map = document.querySelector('.map');    
+    var adFormFielsets = document.querySelectorAll('.ad-form fieldset');
+
+    adFormFielsets.forEach(function(item) {item.disabled = true});
 
 
     //  содание шаблонов
@@ -16,11 +18,11 @@
     var similarAdTemplate = document.querySelector('#temp')
         .content.querySelector('.map__card');
     var similarAdPin = document.querySelector('#temp')
-    .content.querySelector('.map__pin');
- 
+        .content.querySelector('.map__pin');
+
     for (var i = 0; i < document.mockAds.length; i++) {
         var similarPin = similarAdPin.cloneNode(true);
-        var similarAd = similarAdTemplate.cloneNode(true);        
+        var similarAd = similarAdTemplate.cloneNode(true);
 
         // функция отрнисовки features
         var createFeatures = function () {
@@ -53,7 +55,7 @@
 
         parentPinFragment.appendChild(similarPin);
 
-        
+
         // объявления
 
         similarAd.querySelector('.popup__avatar').src = document.mockAds[i].author.avatar;
