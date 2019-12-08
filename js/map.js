@@ -2,10 +2,12 @@
 
 (function () {
 
-    // удаление класса
+    
 
     var map = document.querySelector('.map');    
     var adFormFielsets = document.querySelectorAll('.ad-form fieldset');
+
+    // неактивный режим
 
     adFormFielsets.forEach(function(item) {item.disabled = true});
 
@@ -13,8 +15,8 @@
     //  содание шаблонов
 
     var pinsMap = document.querySelector('.map__pins');
-    var parentPinFragment = document.createDocumentFragment();
-    var parentCardFragment = document.createDocumentFragment();
+    document.parentPinFragment = document.createDocumentFragment();
+    document.parentCardFragment = document.createDocumentFragment();
     var similarAdTemplate = document.querySelector('#temp')
         .content.querySelector('.map__card');
     var similarAdPin = document.querySelector('#temp')
@@ -53,7 +55,7 @@
         similarPin.style = `left: ${document.mockAds[i].location.x}px; top: ${document.mockAds[i].location.y}px`;
         similarPin.querySelector('.map__pin img').src = document.mockAds[i].author.avatar;
 
-        parentPinFragment.appendChild(similarPin);
+        document.parentPinFragment.appendChild(similarPin);
 
 
         // объявления
@@ -70,11 +72,11 @@
         similarAd.querySelector('.popup__description').textContent = document.mockAds[i].offer.description;
         createPhotos();
 
-        parentCardFragment.appendChild(similarAd);
+        document.parentCardFragment.appendChild(similarAd);
     }
 
-    pinsMap.appendChild(parentPinFragment);
-    map.appendChild(parentCardFragment);
+    // map.appendChild(parentCardFragment);
+
 
     // удаление пустого img
     document.addEventListener("DOMContentLoaded", () => {

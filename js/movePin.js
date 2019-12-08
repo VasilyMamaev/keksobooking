@@ -3,13 +3,16 @@
 (function () {
 
     var map = document.querySelector('.map');
+    var pinsMap = document.querySelector('.map__pins');
     var pin = document.querySelector('.map__pin--main');
     var adForm = document.querySelector('.ad-form');
     var adFormFielsets = document.querySelectorAll('.ad-form fieldset');
 
     var adressInput = document.querySelector('#address');
 
-    pin.addEventListener('mousedown', function(evt) {
+    var listenerTrigger = false;
+
+    var onMouseDown = function(evt) {
         evt.preventDefault();
 
         var startCoords = {
@@ -39,19 +42,25 @@
             document.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseup', onMouseUp);
 
-            map.classList.remove('map--faded');
-            
+            if (!listenerTrigger) {
+            map.classList.remove('map--faded');            
             adFormFielsets.forEach(function(item) {item.disabled = false});
             adForm.classList.remove('ad-form--disabled');
 
+            pinsMap.appendChild(document.parentPinFragment);
+            document.openPinsCard();
+            };
             adressInput.value = startCoords.x + ', ' + startCoords.y;
+
+            listenerTrigger = true;          
         };
 
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
 
-    })
+    };
 
+    pin.addEventListener('mousedown', onMouseDown);
 
 
 })();
