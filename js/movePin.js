@@ -49,6 +49,7 @@
 
             pinsMap.appendChild(document.parentPinFragment);
             document.openPinsCard();
+            document.validation();
             };
             adressInput.value = startCoords.x + ', ' + startCoords.y;
 
